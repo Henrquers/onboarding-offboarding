@@ -28,7 +28,7 @@ o que já foi resolvido.
 
 O catálogo que vem no seed é provisório. Ele reúne as providências citadas na
 abertura do projeto (e-mail, chaves de e-mail, Legal Manager, iManage, workspace
-pessoal, cloud, perfil no site) mais três itens genéricos marcados como "a
+pessoal, Claude, perfil no site) mais três itens genéricos marcados como "a
 confirmar". Quando as listas oficiais chegarem, dá para cadastrá-las direto na
 tela **Catálogo**.
 

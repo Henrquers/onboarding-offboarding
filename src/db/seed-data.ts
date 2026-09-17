@@ -159,8 +159,9 @@ export const tarefasIniciais: SementeTarefa[] = [
   },
   {
     tipo: "ONBOARDING",
-    titulo: "Criar usuário no cloud",
-    sistema: "Cloud",
+    titulo: "Criar usuário no Claude",
+    descricao: "Conta da pessoa no Claude, dentro da organização do escritório.",
+    sistema: "Claude",
     responsavel: "ti",
     prazoDias: 2,
   },
@@ -227,8 +228,8 @@ export const tarefasIniciais: SementeTarefa[] = [
   },
   {
     tipo: "OFFBOARDING",
-    titulo: "Encerrar o usuário no cloud",
-    sistema: "Cloud",
+    titulo: "Encerrar o usuário no Claude",
+    sistema: "Claude",
     responsavel: "ti",
     prazoDias: 1,
   },
