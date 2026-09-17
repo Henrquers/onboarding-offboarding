@@ -1,10 +1,10 @@
 import "dotenv/config";
 import { parseArgs } from "node:util";
-import bcrypt from "bcryptjs";
 import { drizzle } from "drizzle-orm/postgres-js";
-import { eq } from "drizzle-orm";
 import postgres from "postgres";
-import { usuarios } from "./schema";
+import { gravarUsuario, type Papel } from "./popular";
+
+const PAPEIS: Papel[] = ["ADMIN", "SOCIO", "ASSISTENTE"];
 
 /**
  * Cria (ou atualiza) o acesso de uma pessoa.
@@ -22,16 +22,13 @@ async function main() {
     },
   });
 
-  const papeis = ["ADMIN", "SOCIO", "ASSISTENTE"] as const;
-  type Papel = (typeof papeis)[number];
-
   if (!values.nome || !values.email || !values.senha) {
     throw new Error(
       'Uso: npm run db:usuario -- --nome "Nome" --email "email@dominio" --papel ADMIN --senha "senha"',
     );
   }
-  if (!papeis.includes(values.papel as Papel)) {
-    throw new Error(`Papel inválido. Use um destes: ${papeis.join(", ")}.`);
+  if (!PAPEIS.includes(values.papel as Papel)) {
+    throw new Error(`Papel inválido. Use um destes: ${PAPEIS.join(", ")}.`);
   }
   if (values.senha.length < 8) {
     throw new Error("A senha precisa ter ao menos 8 caracteres.");
@@ -40,43 +37,21 @@ async function main() {
   const url = process.env.DATABASE_URL;
   if (!url) throw new Error("DATABASE_URL não definida.");
 
-  const client = postgres(url, { max: 1 });
+  const client = postgres(url, { max: 1, onnotice: () => {} });
   const db = drizzle(client);
 
-  const email = values.email.trim().toLowerCase();
-  const senhaHash = await bcrypt.hash(values.senha, 10);
-
-  const [existente] = await db
-    .select({ id: usuarios.id })
-    .from(usuarios)
-    .where(eq(usuarios.email, email))
-    .limit(1);
-
-  if (existente) {
-    await db
-      .update(usuarios)
-      .set({
-        nome: values.nome,
-        papel: values.papel as Papel,
-        senhaHash,
-        trocarSenha: true,
-        ativo: true,
-      })
-      .where(eq(usuarios.id, existente.id));
-    console.log(`Acesso atualizado: ${email}`);
-  } else {
-    await db.insert(usuarios).values({
-      nome: values.nome,
-      email,
-      papel: values.papel as Papel,
-      senhaHash,
-      trocarSenha: true,
-    });
-    console.log(`Acesso criado: ${email}`);
-  }
+  const resultado = await gravarUsuario(db, {
+    nome: values.nome,
+    email: values.email,
+    senha: values.senha,
+    papel: values.papel as Papel,
+  });
 
   await client.end();
-  console.log("A pessoa troca a senha no primeiro acesso, na tela Conta.");
+  console.log(
+    `Acesso ${resultado}: ${values.email.trim().toLowerCase()}\n` +
+      "A pessoa troca a senha no primeiro acesso, na tela Conta.",
+  );
 }
 
 main().catch((err) => {

@@ -12,7 +12,9 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx src/db/migrate.ts",
     "db:seed": "tsx src/db/seed.ts",
-    "db:usuario": "tsx src/db/criar-usuario.ts"
+    "db:usuario": "tsx src/db/criar-usuario.ts",
+    "vercel-build": "tsx src/db/preparar.ts && next build",
+    "db:preparar": "tsx src/db/preparar.ts"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",

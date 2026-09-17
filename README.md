@@ -27,8 +27,9 @@ o que já foi resolvido.
 ## O que ainda falta definir
 
 Os e-mails de login das cinco pessoas serão confirmados na hora de colocar o app
-em uso, então nenhum vem cadastrado. Até lá, os acessos se criam um a um pelo
-comando `db:usuario` descrito abaixo.
+em uso, então nenhum vem cadastrado. Na publicação, nasce um único acesso de
+administrador a partir das variáveis de ambiente, e os demais são cadastrados
+pela tela **Conta**.
 
 O catálogo que vem no seed é provisório. Ele reúne as providências citadas na
 abertura do projeto (e-mail, chaves de e-mail, Legal Manager, iManage, workspace
@@ -60,38 +61,38 @@ Vercel e do Neon.
 
 ## Publicar (Vercel + Neon, sem custo)
 
-1. **Banco.** Crie um projeto no [Neon](https://neon.tech) (ou no Supabase) e
-   copie a connection string *pooled*.
-2. **Deploy.** Importe este repositório na [Vercel](https://vercel.com) e
-   configure as variáveis de ambiente:
-   - `DATABASE_URL` – a connection string do passo 1.
-   - `AUTH_SECRET` – gere com `openssl rand -base64 32`.
-3. **Criar as tabelas.** Com as mesmas variáveis num `.env` local:
-   ```bash
-   npm install
-   npm run db:migrate
-   ```
-4. **Popular.** O seed cria os responsáveis e o catálogo de providências:
-   ```bash
-   npm run db:seed
-   ```
-5. **Criar os acessos.** Um comando por pessoa, com o e-mail dela:
-   ```bash
-   npm run db:usuario -- --nome "Fulana" --email "fulana@exemplo.com" \
-     --papel ADMIN --senha "senha-provisoria"
-   ```
-   Papéis aceitos: `ADMIN`, `SOCIO` e `ASSISTENTE`. Cada pessoa troca a senha no
-   primeiro acesso, na tela **Conta**, e quem for `ADMIN` também consegue
-   incluir gente nova e redefinir senhas pela própria interface.
+Dá para fazer tudo pelo navegador, sem terminal. São uns dez minutos.
+
+1. **Banco.** Entre em [neon.tech](https://neon.tech), crie a conta (dá para
+   entrar com o GitHub), crie um projeto e copie a *connection string* na opção
+   **Pooled connection**.
+2. **Deploy.** Entre em [vercel.com](https://vercel.com) com a mesma conta do
+   GitHub, clique em **Add New → Project**, escolha este repositório e, antes de
+   clicar em *Deploy*, abra **Environment Variables** e preencha:
+
+   | Variável | Valor |
+   | --- | --- |
+   | `DATABASE_URL` | a string copiada do Neon |
+   | `AUTH_SECRET` | qualquer texto aleatório com 32 caracteres ou mais |
+   | `ADMIN_NOME` | seu nome |
+   | `ADMIN_EMAIL` | o e-mail com que você vai entrar |
+   | `ADMIN_SENHA` | uma senha provisória, com 8 caracteres ou mais |
+
+3. **Deploy.** A publicação aplica as migrações, cria os responsáveis e o
+   catálogo e abre o seu acesso de administrador. A Vercel devolve uma URL do
+   tipo `https://onboarding-offboarding.vercel.app`, que é o endereço do app.
+4. **Entre** com o e-mail e a senha provisória, troque a senha na tela **Conta**
+   e cadastre ali mesmo os acessos dos sócios e das assistentes.
+5. Depois do primeiro acesso, `ADMIN_NOME`, `ADMIN_EMAIL` e `ADMIN_SENHA` podem
+   ser apagadas das variáveis da Vercel. Publicações seguintes nunca
+   sobrescrevem o acesso de quem já está cadastrado.
 
 ## Rodar localmente
 
 ```bash
 cp .env.example .env    # preencha DATABASE_URL e AUTH_SECRET
 npm install
-npm run db:migrate
-npm run db:seed
-npm run db:usuario -- --nome "Teste" --email "teste@exemplo.com" --papel ADMIN --senha "teste1234"
+npm run db:preparar
 npm run dev
 ```
 
@@ -103,10 +104,11 @@ npm run dev
 | `npm run build` | Build de produção. |
 | `npm run typecheck` | Checagem de tipos. |
 | `npm run lint` | ESLint. |
+| `npm run db:preparar` | Migra o banco, cria o catálogo e abre o primeiro acesso (é o que roda na publicação). |
 | `npm run db:generate` | Gera uma migração a partir de `src/db/schema.ts`. |
 | `npm run db:migrate` | Aplica as migrações pendentes. |
 | `npm run db:seed` | Cria os responsáveis e o catálogo inicial. |
-| `npm run db:usuario` | Cria ou atualiza o acesso de uma pessoa. |
+| `npm run db:usuario` | Cria ou atualiza o acesso de uma pessoa pelo terminal. |
 
 ## Como o catálogo se relaciona com os processos
 

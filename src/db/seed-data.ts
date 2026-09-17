@@ -7,17 +7,10 @@
  * tela "Catálogo", sem mexer no código e sem afetar processos já abertos.
  */
 
-export type SementeUsuario = {
-  nome: string;
-  email: string;
-  papel: "ADMIN" | "SOCIO" | "ASSISTENTE";
-};
-
 export type SementeResponsavel = {
   chave: string;
   nome: string;
   tipo: "USUARIO" | "EXTERNO";
-  emailUsuario?: string;
   contato?: string;
   observacoes?: string;
 };
@@ -32,16 +25,6 @@ export type SementeTarefa = {
   prazoDias?: number;
   obrigatoria?: boolean;
 };
-
-/**
- * Fica vazio de propósito. Os e-mails de login das cinco pessoas do escritório
- * serão confirmados antes de o app entrar em uso; até lá, crie os acessos um a
- * um com:
- *
- *   npm run db:usuario -- --nome "Fulana" --email "fulana@exemplo.com" \
- *     --papel ADMIN --senha "senha-provisoria"
- */
-export const usuariosIniciais: SementeUsuario[] = [];
 
 export const responsaveisIniciais: SementeResponsavel[] = [
   {
