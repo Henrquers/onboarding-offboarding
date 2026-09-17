@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  --color-tinta-50: #f4f6f8;
+  --color-tinta-100: #e6eaef;
+  --color-tinta-200: #cbd4dd;
+  --color-tinta-300: #a3b2c2;
+  --color-tinta-400: #738aa1;
+  --color-tinta-500: #536d86;
+  --color-tinta-600: #41576e;
+  --color-tinta-700: #36475a;
+  --color-tinta-800: #2f3d4c;
+  --color-tinta-900: #1f2937;
+  --color-tinta-950: #141b26;
+}
+
+:root {
+  --fundo: var(--color-tinta-50);
+  --superficie: #ffffff;
+  --borda: var(--color-tinta-200);
+  --texto: var(--color-tinta-900);
+  --texto-suave: var(--color-tinta-500);
+  --destaque: var(--color-tinta-700);
+  --destaque-texto: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fundo: var(--color-tinta-950);
+    --superficie: #1a2331;
+    --borda: #2c3a4d;
+    --texto: var(--color-tinta-100);
+    --texto-suave: var(--color-tinta-300);
+    --destaque: var(--color-tinta-200);
+    --destaque-texto: var(--color-tinta-950);
+  }
+}
+
+body {
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: var(--font-sans);
+}
+
+.superficie {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+}
+
+.rotulo {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+  margin-bottom: 0.375rem;
+}
+
+.campo {
+  width: 100%;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9375rem;
+  color: var(--texto);
+}
+
+.campo:focus {
+  outline: 2px solid var(--destaque);
+  outline-offset: 1px;
+}
+
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1px solid var(--borda);
+  background: var(--superficie);
+  color: var(--texto);
+  cursor: pointer;
+}
+
+.botao:hover {
+  border-color: var(--destaque);
+}
+
+.botao:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.botao:disabled:hover {
+  border-color: var(--borda);
+}
+
+.botao-primario {
+  background: var(--destaque);
+  border-color: var(--destaque);
+  color: var(--destaque-texto);
+}
+
+.botao-primario:hover {
+  opacity: 0.9;
+}
