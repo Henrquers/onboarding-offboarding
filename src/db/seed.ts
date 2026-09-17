@@ -27,6 +27,7 @@ async function main() {
   const senhaHash = await bcrypt.hash(senhaInicial, 10);
 
   const idsPorEmail = new Map<string, string>();
+  let usuariosCriados = 0;
   for (const semente of usuariosIniciais) {
     const [existente] = await db
       .select({ id: usuarios.id })
@@ -44,6 +45,7 @@ async function main() {
       .values({ ...semente, senhaHash, trocarSenha: true })
       .returning({ id: usuarios.id });
     idsPorEmail.set(semente.email, criado.id);
+    usuariosCriados += 1;
     console.log(`Usuário criado: ${semente.email}`);
   }
 
@@ -109,9 +111,14 @@ async function main() {
 
   await client.end();
 
-  if (!process.env.SENHA_INICIAL) {
-    console.log(`\nSenha inicial de todos os usuários novos: ${senhaInicial}`);
-    console.log("Anote agora: ela não é exibida de novo.");
+  if (usuariosCriados === 0) {
+    console.log(
+      "\nNenhum acesso foi criado. Crie um a um com:\n" +
+        '  npm run db:usuario -- --nome "Fulana" --email "fulana@exemplo.com" --papel ADMIN --senha "senha-provisoria"',
+    );
+  } else if (!process.env.SENHA_INICIAL) {
+    console.log(`\nSenha inicial dos usuários novos: ${senhaInicial}`);
+    console.log("Anote agora, porque ela não é exibida de novo.");
   }
 }
 

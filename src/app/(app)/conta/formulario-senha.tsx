@@ -55,12 +55,12 @@ export function FormularioSenha() {
       </div>
 
       {estado.erro ? (
-        <p className="text-sm text-rose-700 dark:text-rose-300" role="alert">
+        <p className="text-sm atrasada" role="alert">
           {estado.erro}
         </p>
       ) : null}
       {estado.ok ? (
-        <p className="text-sm text-emerald-700 dark:text-emerald-300" role="status">
+        <p className="text-sm text-[var(--acento)]" role="status">
           {estado.ok}
         </p>
       ) : null}

@@ -10,7 +10,7 @@ import {
   obterProcesso,
 } from "@/lib/consultas";
 import {
-  corStatusProcesso,
+  classeStatusProcesso,
   formatarData,
   formatarDataHora,
   rotuloStatusProcesso,
@@ -49,7 +49,7 @@ export default async function PaginaProcesso({
       <header className="superficie rounded-lg p-5">
         <div className="flex flex-wrap items-center gap-3">
           <h1 className="text-lg font-semibold">{processo.pessoaNome}</h1>
-          <Etiqueta classe={corStatusProcesso[processo.status]}>
+          <Etiqueta classe={classeStatusProcesso[processo.status]}>
             {rotuloTipoProcesso[processo.tipo]} · {rotuloStatusProcesso[processo.status]}
           </Etiqueta>
         </div>

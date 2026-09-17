@@ -1,6 +1,6 @@
 import { Etiqueta } from "@/components/etiqueta";
 import {
-  corStatusTarefa,
+  classeStatusTarefa,
   formatarData,
   formatarDataHora,
   rotuloStatusTarefa,
@@ -55,7 +55,7 @@ export function LinhaTarefa({
     <li className="px-4 py-3">
       <details>
         <summary className="flex cursor-pointer flex-wrap items-center gap-x-3 gap-y-1 text-sm marker:content-['']">
-          <Etiqueta classe={corStatusTarefa[tarefa.status]}>
+          <Etiqueta classe={classeStatusTarefa[tarefa.status]}>
             {rotuloStatusTarefa[tarefa.status]}
           </Etiqueta>
           <span className={tarefa.status === "NAO_APLICAVEL" ? "line-through" : ""}>
@@ -70,7 +70,7 @@ export function LinhaTarefa({
             <span>{responsavelNome ?? "Sem responsável"}</span>
             {tarefa.prazo ? (
               <span
-                className={`tabular-nums ${atrasada ? "font-semibold text-rose-700 dark:text-rose-300" : ""}`}
+                className={`tabular-nums ${atrasada ? "atrasada" : ""}`}
               >
                 {formatarData(tarefa.prazo)}
               </span>

@@ -3,8 +3,8 @@ import { Etiqueta } from "@/components/etiqueta";
 import { Progresso } from "@/components/progresso";
 import { listarPendencias, listarProcessos } from "@/lib/consultas";
 import {
-  corStatusProcesso,
-  corStatusTarefa,
+  classeStatusProcesso,
+  classeStatusTarefa,
   formatarData,
   rotuloStatusProcesso,
   rotuloStatusTarefa,
@@ -54,7 +54,7 @@ export default async function Painel() {
                 <Link href={`/processos/${processo.id}`} className="block space-y-2">
                   <div className="flex items-center justify-between gap-2">
                     <span className="font-medium">{processo.pessoaNome}</span>
-                    <Etiqueta classe={corStatusProcesso[processo.status]}>
+                    <Etiqueta classe={classeStatusProcesso[processo.status]}>
                       {rotuloTipoProcesso[processo.tipo]}
                     </Etiqueta>
                   </div>
@@ -104,7 +104,7 @@ export default async function Painel() {
                           href={`/processos/${tarefa.processoId}`}
                           className="flex flex-wrap items-center gap-x-3 gap-y-1"
                         >
-                          <Etiqueta classe={corStatusTarefa[tarefa.status]}>
+                          <Etiqueta classe={classeStatusTarefa[tarefa.status]}>
                             {rotuloStatusTarefa[tarefa.status]}
                           </Etiqueta>
                           <span>{tarefa.titulo}</span>
@@ -113,7 +113,7 @@ export default async function Painel() {
                           </span>
                           {tarefa.prazo ? (
                             <span
-                              className={`ms-auto text-xs tabular-nums ${atrasada ? "font-semibold text-rose-700 dark:text-rose-300" : ""}`}
+                              className={`ms-auto text-xs tabular-nums ${atrasada ? "atrasada" : ""}`}
                               style={atrasada ? undefined : { color: "var(--texto-suave)" }}
                             >
                               {atrasada ? "venceu em " : "até "}
@@ -138,7 +138,7 @@ export default async function Painel() {
             {encerrados.map((processo) => (
               <li key={processo.id} className="px-4 py-2.5 text-sm">
                 <Link href={`/processos/${processo.id}`} className="flex flex-wrap items-center gap-3">
-                  <Etiqueta classe={corStatusProcesso[processo.status]}>
+                  <Etiqueta classe={classeStatusProcesso[processo.status]}>
                     {rotuloStatusProcesso[processo.status]}
                   </Etiqueta>
                   <span>{processo.pessoaNome}</span>

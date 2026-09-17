@@ -23,28 +23,24 @@ export const rotuloPapel = {
   ASSISTENTE: "Assistente",
 } as const;
 
-export const corStatusTarefa: Record<
+export const classeStatusTarefa: Record<
   keyof typeof rotuloStatusTarefa,
   string
 > = {
-  PENDENTE: "bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200",
-  SOLICITADA: "bg-sky-100 text-sky-900 dark:bg-sky-950 dark:text-sky-200",
-  CONCLUIDA:
-    "bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200",
-  NAO_APLICAVEL:
-    "bg-neutral-200 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300",
-  BLOQUEADA: "bg-rose-100 text-rose-900 dark:bg-rose-950 dark:text-rose-200",
+  PENDENTE: "etiqueta-pendente",
+  SOLICITADA: "etiqueta-solicitada",
+  CONCLUIDA: "etiqueta-concluida",
+  NAO_APLICAVEL: "etiqueta-na",
+  BLOQUEADA: "etiqueta-bloqueada",
 };
 
-export const corStatusProcesso: Record<
+export const classeStatusProcesso: Record<
   keyof typeof rotuloStatusProcesso,
   string
 > = {
-  EM_ANDAMENTO: "bg-sky-100 text-sky-900 dark:bg-sky-950 dark:text-sky-200",
-  CONCLUIDO:
-    "bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200",
-  CANCELADO:
-    "bg-neutral-200 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300",
+  EM_ANDAMENTO: "etiqueta-solicitada",
+  CONCLUIDO: "etiqueta-concluida",
+  CANCELADO: "etiqueta-na",
 };
 
 export function formatarData(valor: Date | string | null | undefined) {

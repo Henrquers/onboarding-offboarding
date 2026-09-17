@@ -1,48 +1,63 @@
 @import "tailwindcss";
 
+/*
+ * Identidade visual Coletta Rodrigues Advogados.
+ * Cores institucionais do manual da marca (abr/2022):
+ *   Pantone 540 C — #003259 (azul institucional)
+ *   Pantone 326 C — #00B2AD (turquesa)
+ *   Pantone 538 C — #D6DBDE (cinza claro)
+ * Tipografia: Montserrat como fonte principal, Arial como apoio.
+ */
 @theme {
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-
-  --color-tinta-50: #f4f6f8;
-  --color-tinta-100: #e6eaef;
-  --color-tinta-200: #cbd4dd;
-  --color-tinta-300: #a3b2c2;
-  --color-tinta-400: #738aa1;
-  --color-tinta-500: #536d86;
-  --color-tinta-600: #41576e;
-  --color-tinta-700: #36475a;
-  --color-tinta-800: #2f3d4c;
-  --color-tinta-900: #1f2937;
-  --color-tinta-950: #141b26;
+  --color-marca-azul: #003259;
+  --color-marca-turquesa: #00b2ad;
+  --color-marca-cinza: #d6dbde;
 }
 
 :root {
-  --fundo: var(--color-tinta-50);
+  --marca-azul: #003259;
+  --marca-turquesa: #00b2ad;
+  --marca-cinza: #d6dbde;
+
+  --fundo: #f1f4f6;
   --superficie: #ffffff;
-  --borda: var(--color-tinta-200);
-  --texto: var(--color-tinta-900);
-  --texto-suave: var(--color-tinta-500);
-  --destaque: var(--color-tinta-700);
+  --borda: var(--marca-cinza);
+  --texto: #0d2b45;
+  --texto-suave: #5d7488;
+  --destaque: var(--marca-azul);
   --destaque-texto: #ffffff;
+  --acento: #00817e;
+  --cabecalho: var(--marca-azul);
+  --cabecalho-texto: #ffffff;
+  --cabecalho-texto-suave: #b9ccd8;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --fundo: var(--color-tinta-950);
-    --superficie: #1a2331;
-    --borda: #2c3a4d;
-    --texto: var(--color-tinta-100);
-    --texto-suave: var(--color-tinta-300);
-    --destaque: var(--color-tinta-200);
-    --destaque-texto: var(--color-tinta-950);
+    --fundo: #041f36;
+    --superficie: #07304f;
+    --borda: #13496f;
+    --texto: #e9f0f4;
+    --texto-suave: #a0bacb;
+    --destaque: var(--marca-turquesa);
+    --destaque-texto: #002136;
+    --acento: #4fd3cf;
+    --cabecalho: #002945;
+    --cabecalho-texto: #ffffff;
+    --cabecalho-texto-suave: #9fbecd;
   }
 }
 
 body {
   background: var(--fundo);
   color: var(--texto);
-  font-family: var(--font-sans);
+  font-family: var(--fonte-montserrat), Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.01em;
 }
 
 .superficie {
@@ -50,11 +65,16 @@ body {
   border: 1px solid var(--borda);
 }
 
+.cabecalho {
+  background: var(--cabecalho);
+  color: var(--cabecalho-texto);
+}
+
 .rotulo {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--texto-suave);
   margin-bottom: 0.375rem;
@@ -64,15 +84,16 @@ body {
   width: 100%;
   background: var(--superficie);
   border: 1px solid var(--borda);
-  border-radius: 0.5rem;
+  border-radius: 0.375rem;
   padding: 0.5rem 0.75rem;
   font-size: 0.9375rem;
   color: var(--texto);
 }
 
 .campo:focus {
-  outline: 2px solid var(--destaque);
+  outline: 2px solid var(--marca-turquesa);
   outline-offset: 1px;
+  border-color: var(--marca-turquesa);
 }
 
 .botao {
@@ -80,7 +101,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.375rem;
-  border-radius: 0.5rem;
+  border-radius: 0.375rem;
   padding: 0.5rem 0.9rem;
   font-size: 0.875rem;
   font-weight: 600;
@@ -88,10 +109,14 @@ body {
   background: var(--superficie);
   color: var(--texto);
   cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s,
+    opacity 0.15s;
 }
 
 .botao:hover {
-  border-color: var(--destaque);
+  border-color: var(--marca-turquesa);
 }
 
 .botao:disabled {
@@ -110,5 +135,99 @@ body {
 }
 
 .botao-primario:hover {
-  opacity: 0.9;
+  background: var(--marca-turquesa);
+  border-color: var(--marca-turquesa);
+  color: #ffffff;
+}
+
+/* Régua turquesa que separa o cabeçalho do conteúdo, como no material impresso. */
+.fio-marca {
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--marca-turquesa) 0%,
+    var(--marca-azul) 70%
+  );
+}
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--marca-turquesa);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+/*
+ * Etiquetas de status. O cinza, o azul e o turquesa vêm da paleta institucional;
+ * o vermelho existe só para o que travou, que precisa destoar do resto.
+ */
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.etiqueta-pendente {
+  background: #dfe5e9;
+  color: #3e5567;
+}
+
+.etiqueta-solicitada {
+  background: #dbe7f0;
+  color: #003259;
+}
+
+.etiqueta-concluida {
+  background: #d3f0ef;
+  color: #00615e;
+}
+
+.etiqueta-na {
+  background: transparent;
+  color: var(--texto-suave);
+  box-shadow: inset 0 0 0 1px var(--borda);
+}
+
+.etiqueta-bloqueada {
+  background: #fadfe2;
+  color: #8c1d2a;
+}
+
+@media (prefers-color-scheme: dark) {
+  .etiqueta-pendente {
+    background: #1d3d55;
+    color: #c3d5e0;
+  }
+
+  .etiqueta-solicitada {
+    background: #0d4a78;
+    color: #cfe5f5;
+  }
+
+  .etiqueta-concluida {
+    background: #0a4f4d;
+    color: #8fe4e0;
+  }
+
+  .etiqueta-bloqueada {
+    background: #5c1d26;
+    color: #f7c6cc;
+  }
+}
+
+.atrasada {
+  color: #a22030;
+  font-weight: 600;
+}
+
+@media (prefers-color-scheme: dark) {
+  .atrasada {
+    color: #ff9aa6;
+  }
 }

@@ -26,6 +26,10 @@ o que já foi resolvido.
 
 ## O que ainda falta definir
 
+Os e-mails de login das cinco pessoas serão confirmados na hora de colocar o app
+em uso, então nenhum vem cadastrado. Até lá, os acessos se criam um a um pelo
+comando `db:usuario` descrito abaixo.
+
 O catálogo que vem no seed é provisório. Ele reúne as providências citadas na
 abertura do projeto (e-mail, chaves de e-mail, Legal Manager, iManage, workspace
 pessoal, Claude, perfil no site) mais três itens genéricos marcados como "a
@@ -35,6 +39,18 @@ tela **Catálogo**.
 Notificação automática por e-mail ficou de fora por decisão do escopo inicial.
 As pessoas continuam pedindo as providências pelos canais de hoje e registram no
 app o que foi feito.
+
+## Identidade visual
+
+O app segue o manual da marca (abr/2022):
+
+- **Cores.** Azul institucional `#003259` (Pantone 540 C), turquesa `#00B2AD`
+  (Pantone 326 C) e cinza `#D6DBDE` (Pantone 538 C).
+- **Tipografia.** Montserrat como fonte principal, Arial como apoio.
+- **Marca.** Em `public/` estão as três versões usadas pelo app, extraídas do
+  manual em vetor: principal, negativa (para o cabeçalho e a tela de login, que
+  são azul institucional) e apenas o símbolo, que serve de favicon. As cores da
+  marca não são alteradas em nenhuma tela, conforme o manual determina.
 
 ## Stack
 
@@ -55,12 +71,18 @@ Vercel e do Neon.
    npm install
    npm run db:migrate
    ```
-4. **Popular.** Antes de rodar, confira os e-mails em `src/db/seed-data.ts` –
-   eles são a chave de login de cada pessoa.
+4. **Popular.** O seed cria os responsáveis e o catálogo de providências:
    ```bash
-   SENHA_INICIAL="uma-senha-provisoria" npm run db:seed
+   npm run db:seed
    ```
-   Cada pessoa troca a senha no primeiro acesso, na tela **Conta**.
+5. **Criar os acessos.** Um comando por pessoa, com o e-mail dela:
+   ```bash
+   npm run db:usuario -- --nome "Fulana" --email "fulana@exemplo.com" \
+     --papel ADMIN --senha "senha-provisoria"
+   ```
+   Papéis aceitos: `ADMIN`, `SOCIO` e `ASSISTENTE`. Cada pessoa troca a senha no
+   primeiro acesso, na tela **Conta**, e quem for `ADMIN` também consegue
+   incluir gente nova e redefinir senhas pela própria interface.
 
 ## Rodar localmente
 
@@ -69,6 +91,7 @@ cp .env.example .env    # preencha DATABASE_URL e AUTH_SECRET
 npm install
 npm run db:migrate
 npm run db:seed
+npm run db:usuario -- --nome "Teste" --email "teste@exemplo.com" --papel ADMIN --senha "teste1234"
 npm run dev
 ```
 
@@ -82,7 +105,8 @@ npm run dev
 | `npm run lint` | ESLint. |
 | `npm run db:generate` | Gera uma migração a partir de `src/db/schema.ts`. |
 | `npm run db:migrate` | Aplica as migrações pendentes. |
-| `npm run db:seed` | Cria usuários, responsáveis e o catálogo inicial. |
+| `npm run db:seed` | Cria os responsáveis e o catálogo inicial. |
+| `npm run db:usuario` | Cria ou atualiza o acesso de uma pessoa. |
 
 ## Como o catálogo se relaciona com os processos
 

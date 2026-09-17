@@ -33,26 +33,15 @@ export type SementeTarefa = {
   obrigatoria?: boolean;
 };
 
-// Confira os e-mails antes de rodar o seed: eles são a chave de login.
-export const usuariosIniciais: SementeUsuario[] = [
-  {
-    nome: "Henrique",
-    email: "henrique@colettarodrigues.com.br",
-    papel: "ADMIN",
-  },
-  { nome: "Diogo", email: "diogo@colettarodrigues.com.br", papel: "SOCIO" },
-  { nome: "João", email: "joao@colettarodrigues.com.br", papel: "SOCIO" },
-  {
-    nome: "Gabriela",
-    email: "gabriela@colettarodrigues.com.br",
-    papel: "ASSISTENTE",
-  },
-  {
-    nome: "Neiva",
-    email: "neiva@colettarodrigues.com.br",
-    papel: "ASSISTENTE",
-  },
-];
+/**
+ * Fica vazio de propósito. Os e-mails de login das cinco pessoas do escritório
+ * serão confirmados antes de o app entrar em uso; até lá, crie os acessos um a
+ * um com:
+ *
+ *   npm run db:usuario -- --nome "Fulana" --email "fulana@exemplo.com" \
+ *     --papel ADMIN --senha "senha-provisoria"
+ */
+export const usuariosIniciais: SementeUsuario[] = [];
 
 export const responsaveisIniciais: SementeResponsavel[] = [
   {
@@ -85,13 +74,11 @@ export const responsaveisIniciais: SementeResponsavel[] = [
     chave: "financeiro",
     nome: "Gabriela (assistente financeira)",
     tipo: "USUARIO",
-    emailUsuario: "gabriela@colettarodrigues.com.br",
   },
   {
     chave: "administrativo",
     nome: "Neiva (assistente administrativa)",
     tipo: "USUARIO",
-    emailUsuario: "neiva@colettarodrigues.com.br",
   },
   {
     chave: "socios",
